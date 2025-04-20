@@ -30,24 +30,65 @@
 #include <iostream>
 #include <string>
 
+/**
+ * @namespace jlizard::logger
+ * @brief Provides simple logging functionality for the jlizard library
+ */
+namespace jlizard::logger
+{
+    /**
+     * @enum LogLevel
+     * @brief Defines logging severity levels
+     */
+    enum class LogLevel : unsigned char {
+        NONE = 0, /**< No logging */
+        DEBUG,    /**< Debug-level messages */
+        INFO,     /**< Informational messages */
+        WARNING,  /**< Warning messages */
+        ERROR,    /**< Error messages */
+        MAX       /**< Upper bound of log levels */
+    };
 
-    namespace jlizard::logger
-    {
-        enum class  LogLevel : unsigned char {
-            NONE = 0,
-            DEBUG,
-            INFO,
-            WARNING,
-            ERROR,
-            MAX
-        };
-
-        void log(const std::string& msg,const LogLevel log_level = LogLevel::INFO);
-        inline void error(const std::string& msg) { log(msg,LogLevel::ERROR);}
-        inline void warn(const std::string& msg) { log(msg,LogLevel::WARNING);}
-        inline void info(const std::string& msg) { log(msg,LogLevel::INFO);}
-
-    }
-
+    /**
+     * @brief Log a message with the specified log level
+     * 
+     * This function outputs a log message to the appropriate stream (std::cout or std::cerr)
+     * based on the log level. Error messages go to std::cerr, all others go to std::cout.
+     * 
+     * @param msg The message to log
+     * @param log_level The severity level of the log message (default: INFO)
+     */
+    void log(const std::string& msg, const LogLevel log_level = LogLevel::INFO);
+    
+    /**
+     * @brief Log an error message
+     * 
+     * Convenience function that logs a message with ERROR level.
+     * Error messages are output to std::cerr.
+     * 
+     * @param msg The error message to log
+     */
+    inline void error(const std::string& msg) { log(msg, LogLevel::ERROR); }
+    
+    /**
+     * @brief Log a warning message
+     * 
+     * Convenience function that logs a message with WARNING level.
+     * Warning messages are output to std::cout.
+     * 
+     * @param msg The warning message to log
+     */
+    inline void warn(const std::string& msg) { log(msg, LogLevel::WARNING); }
+    
+    /**
+     * @brief Log an informational message
+     * 
+     * Convenience function that logs a message with INFO level.
+     * Info messages are output to std::cout.
+     * 
+     * @param msg The informational message to log
+     */
+    inline void info(const std::string& msg) { log(msg, LogLevel::INFO); }
+}
 
 #endif //LOGGER_H
