@@ -37,12 +37,15 @@ private:
     std::stringstream err_stream_;
 
 public:
-    StdoutRedirector() {
+    explicit StdoutRedirector(const bool redirect_out_only = false) {
         // Save original buffer and redirect stdout
         original_buf_ = std::cout.rdbuf();
         err_original_buf_ = std::cerr.rdbuf();
         std::cout.rdbuf(stream_.rdbuf());
-        std::cerr.rdbuf(err_stream_.rdbuf());
+        if (!redirect_out_only)
+        {
+            std::cerr.rdbuf(err_stream_.rdbuf());
+        }
     }
 
     ~StdoutRedirector() {
